@@ -1,4 +1,4 @@
-import './styles.css';
+// import './styles.css';
 
 // Statisk tekst som brukes til å søke i
 const text =
@@ -6,8 +6,23 @@ const text =
 
 const longestWord = () => {
   // TODO: Gjør om text til array eks. ['Baby', 'cliche']
+  const words = text.split(' ') //split er en built in function som deler per mellomrom her og gjør det til en array
+  let longest = '';
+
   // TODO: Velg første ord så du har noe å sammenlikne med
+  //.length er en måte å indexe arrays
+  if (words.length > 0) {
+    longest = words[0];
+  }
+
   // TODO: Gå igjennom alle ordene og oppdater hvis nytt ord er lengre
+  for (let i = 1; i < words.length; i++) {
+    if (words[i].length > longest.length) {
+      longest = words[i];
+    }
+  }
+
+  return longest;
 };
 
 console.log(longestWord());

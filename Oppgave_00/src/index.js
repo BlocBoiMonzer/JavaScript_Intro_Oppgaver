@@ -76,8 +76,6 @@ createBtn.addEventListener('click', function() {
 
 // Oppgave 6
 
-// Oppgave 6
-
 const removeLiBtn = document.getElementById("remove-li");
 const list = document.getElementById("list");
 

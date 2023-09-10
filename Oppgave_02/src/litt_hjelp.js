@@ -1,51 +1,46 @@
-import './styles.css';
-import { users } from './util';
+import 'styles.css';
+import { users } from 'util.js';
+// klarer ikke å importere. Vet ikke noe om modules, ES modules, mjs og sånt. Plz forklar
+// av alt sammen, synes jeg det vanskeligste er å kjøre javascript filer
 
-// TODO: Hent HTML #id med getElementById
-const searchInput = '';
-const filterInput = '';
-const filterButton = '';
-const userUl = '';
+const searchInput = document.getElementById('searchInput');
+const filterInput = document.getElementById('filterInput');
+const filterButton = document.getElementById('filterButton');
+const userUl = document.getElementById('userUl');
 
 const createTableUI = (users) => {
   userUl.innerHTML = null;
   userUl.innerHTML += `<li><span>Id</span><span>Navn</span><span>Alder</span></li>`;
-  // TODO: bruk for-of eller vanlig for-løkke og tempelate literals `` til å skrive ut listen med brukere
+  for (const user of users) {
+    userUl.innerHTML += `<li><span>${user.id}</span><span>${user.name}</span><span>${user.age}</span></li>`;
+  }
 };
 
 const handleSearch = () => {
-  // TODO: Hent ut verdien fra søke input feltet
-  const searchName = '';
-  // TODO: Sjekk om searchName ekisterer
-  if ('') {
-    // TODO: Bruk .find for å finne navnet til den brukeren som matcher søkeordet
-    const searchResult = '';
-    // TODO: Sjekk som resultatet eksisterer
-    if ('') {
-      // TODO: Oppdatere grensesnittet med createTableUI og resultatet av søket
+  const searchName = searchInput.value;
+  if (searchName) {
+    const searchResult = users.find((user) => user.name === searchName);
+    if (searchResult) {
+      createTableUI([searchResult]);
     } else {
-      // TODO: Oppdatere grensesnittet med userUl.innerHTML og en passende tekst når vi ikke finner noe
+      userUl.innerHTML = 'No matching user found.';
     }
   } else {
-    // TODO: Hvis ingen søkeord vis default liste med brukere via createTableUI
+    createTableUI(users);
   }
 };
 
 const handleFilter = () => {
-  // TODO: Hent ut verdien fra filter input feltet
-  const filterValue = '';
-  // TODO: Sjekk om filterVerdien ekisterer og er et tall
-  if ('') {
-    // TODO: Bruk .filter for å hente ut de brukeren  som har en alder høyere en filterverdien
-    const filterResult = '';
-    // TODO: Sjekk om det er noe resultat og at legnden er større enn null
-    if ('') {
-      // TODO: Oppdatere grensesnittet med createTableUI og resultatet av filteret
+  const filterValue = filterInput.value;
+  if (filterValue && !isNaN(filterValue)) {
+    const filterResult = users.filter((user) => user.age > filterValue);
+    if (filterResult.length > 0) {
+      createTableUI(filterResult);
     } else {
-      // TODO: Oppdatere grensesnittet med userUl.innerHTML og en passende tekst når vi ikke finner noe
+      userUl.innerHTML = 'No users found with age higher than the filter value.';
     }
   } else {
-    // TODO: Hvis ingen filter eller filteret ikke er et tall vis default liste med brukere via createTableUI
+    createTableUI(users);
   }
 };
 
@@ -55,5 +50,5 @@ const main = () => {
 
 main();
 
-// TODO: Lytt til tastatur klikk på søkefeltet, den skal trigge søkefunksjonen (handleSearch)
-// TODO: Lytt til klikk på filter-knappen, den skal trigge filterfunksjonen (handleFilter)
+searchInput.addEventListener('keyup', handleSearch);
+filterButton.addEventListener('click', handleFilter);
